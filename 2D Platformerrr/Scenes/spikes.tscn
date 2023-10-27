@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bb710uk3b2i58"]
+
+[ext_resource type="Texture2D" uid="uid://moofe7chhdal" path="res://Sprites/lil lab tiles.png" id="1_2yatx"]
+
+[node name="Spikes" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_2yatx")
+offset = Vector2(0, -4.5)
+region_enabled = true
+region_rect = Rect2(64, 55, 16, 9)

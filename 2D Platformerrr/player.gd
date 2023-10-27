@@ -1,47 +1,106 @@
 extends CharacterBody2D
 
+@export var movement_data : PlayerMovementData
+@export var ghost_node : PackedScene
+@onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var coyote_jump_timer = $CoyoteJumpTimer
+@onready var dash_timer = $DashTimer
+@onready var ghost_timer = $GhostTimer
 
-const SPEED = 100.0
-const ACCELERATION = 800.0
-const FRICTION = 1000.0
-const JUMP_VELOCITY = -300.0
-
-# Get the gravity from the project settings to be synced with RigidBody nodes.
+var state = "free"
+var dash_dir
+var dash_count = 1
+var buffer_frames_left = 0
+var velocity_previous = Vector2()
+var hit_the_ground = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-@onready var animated_sprite_2d = $AnimatedSprite2D
-
 func _physics_process(delta):
-	apply_gravity(delta)
-	handle_jump()
 	var input_axis = Input.get_axis("left", "right")
-	handle_acceleration(input_axis, delta)
-	apply_friction(input_axis, delta)
-	update_animations(input_axis)
-	move_and_slide()
+	if state == "free":
+		ghost_timer.stop()
+		apply_gravity(delta)
+		handle_jump()
+		handle_acceleration(input_axis, delta)
+		apply_friction(input_axis, delta)
+		apply_air_resistance(input_axis, delta)
+		var was_on_floor = is_on_floor()
+		move_and_slide()
+		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
+		if just_left_ledge:
+			coyote_jump_timer.start()
+		if Input.is_action_just_pressed("ui_up"):
+			movement_data = load("res://IceyMovementData.tres")
+		if Input.is_action_just_pressed("dash") and dash_count > 0: 
+			dash_count -= 1
+			state = "dash"
+			dash_timer.start()
+			ghost_timer.start()
+			dash_dir = get_local_mouse_position().normalized()
+	elif state == "dash":
+		handle_dash(dash_dir)
+		handle_jump()
+		move_and_slide()
+	update_animations(input_axis, delta)
+	velocity_previous = velocity
+#-------------------FUNCTIONS-------------------
 
+func handle_dash(dash_dir):
+	if dash_timer.time_left > 0.0 and not is_on_floor():
+		velocity = Vector2(600 * dash_dir.x, 600 * dash_dir.y)
+		#animated_sprite_2d.scale.y = 0.5 + (abs(velocity.y)/500)
+		print(animated_sprite_2d.scale.y)
+		#animated_sprite_2d.scale.x = 0.5 + (abs(velocity.x)/500)
+	elif dash_timer.time_left <= 0.0:
+		velocity = Vector2(100 * dash_dir.x, 100 * dash_dir.y)
+		state = "free"
+	elif is_on_floor():
+		if velocity.x > 400: velocity = Vector2(350,0)
+		elif velocity.x < -400: velocity = Vector2(-350,0)
+		else: velocity = Vector2(0,0)
+		state = "free"
 
 func apply_gravity(delta):
 	if not is_on_floor():
-		velocity.y += gravity * delta
+		velocity.y += gravity * movement_data.gravity_scale * delta
+	else: dash_count = 1
 
 func handle_jump():
-	if is_on_floor():
-		if Input.is_action_just_pressed("jump"):
-			velocity.y = JUMP_VELOCITY
-	else:
-		if Input.is_action_just_released("jump") and velocity.y < JUMP_VELOCITY / 2:
-			velocity.y = JUMP_VELOCITY / 2
-
+	var wave_jump = 1.0
+	if velocity.x > 300 or velocity.x < -300: wave_jump = 1.8
+	else: wave_jump = 1.0
+	
+	if buffer_frames_left > 0:
+		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
+			velocity.y = movement_data.jump_velocity
+			velocity.x *= wave_jump
+			dash_count = 1
+			buffer_frames_left = 0
+		else:
+			buffer_frames_left -= 1
+	elif Input.is_action_just_pressed("jump"):
+		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
+			velocity.y = movement_data.jump_velocity
+			velocity.x *= wave_jump
+			dash_count = 1
+		else:
+			buffer_frames_left = 10
+	elif Input.is_action_just_released("jump") and velocity.y < movement_data.jump_velocity / 2:
+		velocity.y = movement_data.jump_velocity / 2
+	
 func handle_acceleration(input_axis, delta):
 	if input_axis != 0:
-		velocity.x = move_toward(velocity.x, SPEED * input_axis, ACCELERATION * delta)
+		velocity.x = move_toward(velocity.x, movement_data.speed * input_axis, movement_data.acceleration * delta)
 
 func apply_friction(input_axis, delta):
-	if input_axis == 0:
-		velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
+	if input_axis == 0 and is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, movement_data.friction * delta)
 
-func update_animations(input_axis):
+func apply_air_resistance(input_axis, delta):
+	if input_axis == 0 and not is_on_floor():
+		velocity.x = move_toward(velocity.x, 0, movement_data.air_resistance)
+
+func update_animations(input_axis, delta):
 	if input_axis != 0:
 		animated_sprite_2d.flip_h = (input_axis < 0)
 		animated_sprite_2d.play("run")
@@ -49,4 +108,22 @@ func update_animations(input_axis):
 		animated_sprite_2d.play("idle")
 		
 	if not is_on_floor():
-		animated_sprite_2d.play("jump")
+		if velocity.y < 2: animated_sprite_2d.play("jump")
+		else: animated_sprite_2d.play("fall")
+		hit_the_ground = false
+	if not hit_the_ground and is_on_floor():
+		hit_the_ground = true
+		animated_sprite_2d.scale.x = remap(abs(velocity_previous.y), 0, abs(1700), 1.2, 2.0)
+		animated_sprite_2d.scale.y = remap(abs(velocity_previous.y), 0, abs(1700), 0.7, 0.5)
+		
+	animated_sprite_2d.scale.x = lerpf(animated_sprite_2d.scale.x, 1, 1 - pow(0.001, delta))
+	animated_sprite_2d.scale.y = lerpf(animated_sprite_2d.scale.y, 1, 1 - pow(0.001, delta))
+
+func add_ghost():
+	var ghost = ghost_node.instantiate()
+	var flip_axis = (Input.get_axis("left", "right")) < 0
+	ghost.set_property(position, animated_sprite_2d.scale, flip_axis)
+	get_tree().current_scene.add_child(ghost)
+
+func _on_ghost_timer_timeout():
+	add_ghost()
