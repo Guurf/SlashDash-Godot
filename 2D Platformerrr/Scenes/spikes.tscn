@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bb710uk3b2i58"]
+[gd_scene load_steps=3 format=3 uid="uid://bb710uk3b2i58"]
 
 [ext_resource type="Texture2D" uid="uid://moofe7chhdal" path="res://Sprites/lil lab tiles.png" id="1_2yatx"]
+[ext_resource type="PackedScene" uid="uid://be0s8ekwrvane" path="res://Scenes/hazard_area.tscn" id="2_r8dyx"]
 
 [node name="Spikes" type="Node2D"]
 
@@ -9,3 +10,12 @@ texture = ExtResource("1_2yatx")
 offset = Vector2(0, -4.5)
 region_enabled = true
 region_rect = Rect2(64, 55, 16, 9)
+
+[node name="HazardArea" parent="." instance=ExtResource("2_r8dyx")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HazardArea"]
+polygon = PackedVector2Array(-7, 0, -4, -6, -3, -6, 0, 0)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="HazardArea"]
+position = Vector2(7, 0)
+polygon = PackedVector2Array(-7, 0, -4, -6, -3, -6, 0, 0)

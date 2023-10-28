@@ -3,10 +3,11 @@ extends Sprite2D
 func _ready():
 	ghosting()
 
-func set_property(tx_pos, tx_scale, tx_flip):
+func set_property(tx_pos, tx_scale, tx_flip, tx_col):
 	position = tx_pos
 	scale = tx_scale
 	flip_h = tx_flip
+	modulate = tx_col
 	
 func ghosting():
 	var tween_fade = get_tree().create_tween()

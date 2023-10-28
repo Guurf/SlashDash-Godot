@@ -6,10 +6,11 @@ extends CharacterBody2D
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var dash_timer = $DashTimer
 @onready var ghost_timer = $GhostTimer
+@onready var starting_position = global_position
 
 var state = "free"
 var dash_dir
-var dash_count = 1
+var dash_count = 2
 var buffer_frames_left = 0
 var velocity_previous = Vector2()
 var hit_the_ground = false
@@ -17,8 +18,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _physics_process(delta):
 	var input_axis = Input.get_axis("left", "right")
+	print("X Velocity: ", round(velocity.x))
 	if state == "free":
-		ghost_timer.stop()
+		if velocity.x <= 300 and velocity.x >= -300: ghost_timer.stop()
 		apply_gravity(delta)
 		handle_jump()
 		handle_acceleration(input_axis, delta)
@@ -31,10 +33,11 @@ func _physics_process(delta):
 			coyote_jump_timer.start()
 		if Input.is_action_just_pressed("ui_up"):
 			movement_data = load("res://IceyMovementData.tres")
-		if Input.is_action_just_pressed("dash") and dash_count > 0: 
+		if Input.is_action_just_pressed("dash") and dash_count > 0 and not is_on_floor(): 
 			dash_count -= 1
 			state = "dash"
 			dash_timer.start()
+			ghost_timer.wait_time = 0.05
 			ghost_timer.start()
 			dash_dir = get_local_mouse_position().normalized()
 	elif state == "dash":
@@ -63,18 +66,18 @@ func handle_dash(dash_dir):
 func apply_gravity(delta):
 	if not is_on_floor():
 		velocity.y += gravity * movement_data.gravity_scale * delta
-	else: dash_count = 1
+	else: dash_count = 2
 
 func handle_jump():
 	var wave_jump = 1.0
-	if velocity.x > 300 or velocity.x < -300: wave_jump = 1.8
+	if velocity.x > 200 or velocity.x < -200: wave_jump = 1.8
 	else: wave_jump = 1.0
 	
 	if buffer_frames_left > 0:
 		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
 			velocity.y = movement_data.jump_velocity
 			velocity.x *= wave_jump
-			dash_count = 1
+			dash_count = 2
 			buffer_frames_left = 0
 		else:
 			buffer_frames_left -= 1
@@ -82,7 +85,7 @@ func handle_jump():
 		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
 			velocity.y = movement_data.jump_velocity
 			velocity.x *= wave_jump
-			dash_count = 1
+			dash_count = 2
 		else:
 			buffer_frames_left = 10
 	elif Input.is_action_just_released("jump") and velocity.y < movement_data.jump_velocity / 2:
@@ -122,8 +125,18 @@ func update_animations(input_axis, delta):
 func add_ghost():
 	var ghost = ghost_node.instantiate()
 	var flip_axis = (Input.get_axis("left", "right")) < 0
-	ghost.set_property(position, animated_sprite_2d.scale, flip_axis)
+	var ghost_col = Color(0, 2.5, 0, 0.3)
+	if state == "free": 
+		ghost_col = Color(2, 7, 2, 0.1)
+		ghost_timer.wait_time = 0.1
+	ghost.set_property(position, animated_sprite_2d.scale, flip_axis, ghost_col)
 	get_tree().current_scene.add_child(ghost)
 
 func _on_ghost_timer_timeout():
 	add_ghost()
+
+
+func _on_hazard_detector_area_entered(area):
+	position = starting_position
+	state = "free"
+	velocity = Vector2(0, 0)
