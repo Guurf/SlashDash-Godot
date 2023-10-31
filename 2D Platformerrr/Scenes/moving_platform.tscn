@@ -22,7 +22,7 @@ region_rect = Rect2(0, 32, 48, 6)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(0, -6.75)
-polygon = PackedVector2Array(-26, 6.75, 26, 6.75, 26, -6.25, 0, -82.25, -26, -6.25)
+polygon = PackedVector2Array(-26, 6.75, 26, 6.75, 26, -6.25, 7, -35.25, 7, -103.25, 0, -117.25, -7, -103.25, -7, -35.25, -26, -6.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
