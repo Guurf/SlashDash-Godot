@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://uiypkgccu47n"
-path="res://.godot/imported/cursor 3x.png-c95ce34badb58781f61987f0dae23a0d.ctex"
+uid="uid://byguw6og6loqv"
+path="res://.godot/imported/dev crusher.png-3c7efcba93d4cd624b88fbac4d949480.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/cursor 3x.png"
-dest_files=["res://.godot/imported/cursor 3x.png-c95ce34badb58781f61987f0dae23a0d.ctex"]
+source_file="res://Sprites/dev crusher.png"
+dest_files=["res://.godot/imported/dev crusher.png-3c7efcba93d4cd624b88fbac4d949480.ctex"]
 
 [params]
 
