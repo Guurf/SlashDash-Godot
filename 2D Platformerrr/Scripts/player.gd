@@ -60,9 +60,12 @@ func _physics_process(delta):
 		collision_shape_2d.disabled = true
 		hazard_collision.disabled = true
 		move_and_slide()
+	elif state == "crouch":
+		terminal_velocity()
+		move_and_slide()
+		
 	update_animations(input_axis, delta)
 	velocity_previous = velocity
-	print("Y Velocity: ", velocity.y)
 #-------------------FUNCTIONS-------------------
 
 func handle_dash(dash_dir):
@@ -98,6 +101,7 @@ func handle_jump():
 		else:
 			buffer_frames_left -= 1
 	elif Input.is_action_just_pressed("jump"):
+		print("X Velocity on jump: ", velocity.x)
 		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
 			velocity.y = movement_data.jump_velocity
 			velocity.x *= wave_jump
@@ -143,7 +147,7 @@ func update_animations(input_axis, delta):
 	else: animated_sprite_2d.offset.y = -25
 
 func terminal_velocity():
-	if velocity.y > 600: velocity.y = 600
+	if velocity.y > 800: velocity.y = 800
 	if velocity.y < -600: velocity.y = -600
 
 func add_ghost():
@@ -174,3 +178,16 @@ func death():
 
 func _on_animated_sprite_2d_animation_finished():
 	if animated_sprite_2d.animation == "death": death()
+
+
+func _on_ring_detector_area_entered(area):
+	dash_count = 1
+	var dash_ring_parent = area.get_parent()
+	print(dash_ring_parent)
+	dash_ring_parent.scale = Vector2(0.3, 0.7)
+	var ring_velocity = dash_ring_parent.launch_velocity
+	var ring_direction = Vector2(cos(dash_ring_parent.launch_direction), sin(dash_ring_parent.launch_direction))
+	ghost_timer.wait_time = 0.05
+	ghost_timer.start()
+	state = "free"
+	velocity = Vector2(ring_velocity * ring_direction.x, ring_velocity * ring_direction.y)
