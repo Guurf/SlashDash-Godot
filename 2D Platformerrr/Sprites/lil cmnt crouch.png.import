@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blwvvthtvhau2"
-path="res://.godot/imported/lil lab tiles.png-ff51734bb4b0775889cc3ae3e7a7d661.ctex"
+uid="uid://b8iupojeapgns"
+path="res://.godot/imported/lil cmnt crouch.png-c1b26c04a1a4ac0195f5b1e2d3c0cc7e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/lil lab tiles.png"
-dest_files=["res://.godot/imported/lil lab tiles.png-ff51734bb4b0775889cc3ae3e7a7d661.ctex"]
+source_file="res://Sprites/lil cmnt crouch.png"
+dest_files=["res://.godot/imported/lil cmnt crouch.png-c1b26c04a1a4ac0195f5b1e2d3c0cc7e.ctex"]
 
 [params]
 

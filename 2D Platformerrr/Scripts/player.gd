@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 @export var movement_data : PlayerMovementData
 @export var ghost_node : PackedScene
-@onready var dash_particles = $"../DashParticles"
 
+@onready var camera_2d = $Camera2D
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var dash_timer = $DashTimer
@@ -11,22 +11,43 @@ extends CharacterBody2D
 @onready var starting_position = global_position
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var hazard_collision = $HazardDetector/CollisionShape2D
+@onready var dash_particles = $GPUParticles2D
+@onready var dust_particles = $GPUParticles2D2
 
+@export var camera_bottom = 0
+var slide_speed = 10.0
 var state = "free"
 var dash_dir
 var dash_count = 1
 var buffer_frames_left = 0
 var velocity_previous = Vector2()
+var velocity_preprevious = Vector2()
 var hit_the_ground = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+func _ready():
+	camera_2d.limit_bottom = camera_bottom
+
 func _physics_process(delta):
 	var input_axis = Input.get_axis("left", "right")
+	#print("X Velocity: ", velocity.x)
+	#print("Y Velocity: ", velocity.y)
 	if state == "free":
+		movement_data = load("res://Movement Data/DefaultMovementData.tres")
 		collision_shape_2d.disabled = false
 		hazard_collision.disabled = false
 		animated_sprite_2d.z_index = 0
+		if dash_particles.emitting == true: dash_particles.emitting = false
+		if animated_sprite_2d.rotation_degrees != 0: animated_sprite_2d.rotation_degrees = 0
+		if floor_max_angle != deg_to_rad(45): floor_max_angle = deg_to_rad(45)
 		if velocity.x <= 300 and velocity.x >= -300: ghost_timer.stop()
+		if Input.is_action_pressed("down"): 
+			state = "crouch"
+			animated_sprite_2d.scale.x = remap(abs(300), 0, abs(1700), 1.2, 2.0)
+			animated_sprite_2d.scale.y = remap(abs(300), 0, abs(1700), 0.7, 0.5)
+			if velocity.x > 0 : velocity.x -= 5
+			elif velocity.x < 0 : velocity.x += 5
+		elif velocity.x < 0: velocity.x += 5
 		apply_gravity(delta)
 		handle_jump()
 		handle_acceleration(input_axis, delta)
@@ -36,8 +57,14 @@ func _physics_process(delta):
 		terminal_velocity()
 		move_and_slide()
 		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
+		var just_hit_ground = is_on_floor() and not was_on_floor
 		if just_left_ledge:
 			coyote_jump_timer.start()
+		if just_hit_ground:
+			dust_particles.emitting = true
+		else: 
+			dust_particles.emitting = false
+		print(dust_particles.emitting)
 		if Input.is_action_just_pressed("ui_up"):
 			movement_data = load("res://IceyMovementData.tres")
 		if Input.is_action_just_pressed("dash") and dash_count > 0 and not is_on_floor(): 
@@ -61,16 +88,45 @@ func _physics_process(delta):
 		hazard_collision.disabled = true
 		move_and_slide()
 	elif state == "crouch":
+		if Input.is_action_just_released("down"): 
+			state = "free"
+			animated_sprite_2d.scale.x = remap(abs(300), 0, abs(1700), 0.9, 0.7)
+			animated_sprite_2d.scale.y = remap(abs(300), 0, abs(1700), 1.1, 1.5)
+		movement_data = load("res://Movement Data/CrouchMovementData.tres")
+		if is_on_wall(): animated_sprite_2d.rotation_degrees = rad_to_deg(get_wall_normal().x)
+		else: animated_sprite_2d.rotation_degrees = rad_to_deg(get_floor_normal().x)
+		input_axis = 0
+		floor_max_angle = deg_to_rad(0)
+		ghost_timer.stop()
+		apply_gravity(delta)
+		handle_jump()
+		handle_acceleration(input_axis, delta)
+		apply_friction(input_axis, delta)
+		apply_air_resistance(input_axis, delta)
+		var was_on_wall = is_on_wall()
+		var was_on_floor = is_on_floor()
 		terminal_velocity()
 		move_and_slide()
+		var just_left_wall = was_on_wall and not is_on_wall()
+		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
+		#print(just_left_wall)
+		if just_left_wall or just_left_ledge:
+			coyote_jump_timer.start()
+			if just_left_wall:
+				print(get_wall_normal())
+				print("Y Velocity on exit: ", velocity_preprevious.y)
+				if abs(velocity_preprevious.y) > 300: velocity.x = get_wall_normal().x * (velocity_preprevious.y)
+				else: velocity.x = get_wall_normal().x * (velocity_preprevious.y / 2)
 		
 	update_animations(input_axis, delta)
+	velocity_preprevious = velocity_previous
 	velocity_previous = velocity
 #-------------------FUNCTIONS-------------------
 
 func handle_dash(dash_dir):
 	if dash_timer.time_left > 0.0 and not is_on_floor():
 		velocity = Vector2(600 * dash_dir.x, 600 * dash_dir.y)
+		dash_particles.emitting = true
 		#animated_sprite_2d.scale.y = 0.5 + (abs(velocity.y)/500)
 		#animated_sprite_2d.scale.x = 0.5 + (abs(velocity.x)/500)
 	elif dash_timer.time_left <= 0.0:
@@ -89,22 +145,25 @@ func apply_gravity(delta):
 
 func handle_jump():
 	var wave_jump = 1.0
-	if velocity.x > 200 or velocity.x < -200: wave_jump = 1.8
-	else: wave_jump = 1.0
-	
+	if state != "crouch":
+		if velocity.x > 200 or velocity.x < -200: wave_jump = 1.8
+		else: wave_jump = 1.0
 	if buffer_frames_left > 0:
 		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
 			velocity.y = movement_data.jump_velocity
-			velocity.x *= wave_jump
+			if state != "crouch": velocity.x *= wave_jump
 			dash_count = 1
 			buffer_frames_left = 0
 		else:
 			buffer_frames_left -= 1
 	elif Input.is_action_just_pressed("jump"):
-		print("X Velocity on jump: ", velocity.x)
+		if state == "crouch" && get_wall_normal().x != 1:
+			floor_max_angle = deg_to_rad(45)
+			if is_on_wall(): 
+				velocity.x = get_wall_normal().x * velocity.y
 		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
 			velocity.y = movement_data.jump_velocity
-			velocity.x *= wave_jump
+			if state != "crouch": velocity.x *= wave_jump
 			dash_count = 1
 		else:
 			buffer_frames_left = 10
@@ -126,17 +185,20 @@ func apply_air_resistance(input_axis, delta):
 func update_animations(input_axis, delta):
 	if animated_sprite_2d.animation != "death":
 		animated_sprite_2d.offset.y = -15
-		if input_axis != 0:
-			animated_sprite_2d.flip_h = (input_axis < 0)
-			animated_sprite_2d.play("run")
+		if state == "crouch":
+			animated_sprite_2d.play("crouch")
 		else:
-			animated_sprite_2d.play("idle")
+			if input_axis != 0:
+				animated_sprite_2d.flip_h = (input_axis < 0)
+				animated_sprite_2d.play("run")
+			else:
+				animated_sprite_2d.play("idle")
+				
+			if not is_on_floor():
+				if velocity.y < 2: animated_sprite_2d.play("jump")
+				else: animated_sprite_2d.play("fall")
+				hit_the_ground = false
 			
-		if not is_on_floor():
-			if velocity.y < 2: animated_sprite_2d.play("jump")
-			else: animated_sprite_2d.play("fall")
-			hit_the_ground = false
-		
 		if not hit_the_ground and is_on_floor():
 			hit_the_ground = true
 			animated_sprite_2d.scale.x = remap(abs(velocity_previous.y), 0, abs(1700), 1.2, 2.0)

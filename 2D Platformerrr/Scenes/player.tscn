@@ -1,15 +1,57 @@
-[gd_scene load_steps=46 format=3 uid="uid://cholc1afgl13v"]
+[gd_scene load_steps=60 format=3 uid="uid://cholc1afgl13v"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_bsy6h"]
 [ext_resource type="Resource" path="res://Movement Data/DefaultMovementData.tres" id="2_krynv"]
 [ext_resource type="PackedScene" uid="uid://7gk6qxaw8bqp" path="res://Scenes/ghost.tscn" id="3_1bcuk"]
 [ext_resource type="Texture2D" uid="uid://cxr5wuw4daeva" path="res://Sprites/Player/player_jump.png" id="4_a8s05"]
+[ext_resource type="Texture2D" uid="uid://b8iupojeapgns" path="res://Sprites/lil cmnt crouch.png" id="4_bdywa"]
 [ext_resource type="Texture2D" uid="uid://dakpdncwuslua" path="res://Sprites/cmnt death.png" id="4_jnhbv"]
 [ext_resource type="Texture2D" uid="uid://wl0qto1ulxx8" path="res://Sprites/Player/player.png" id="5_7r7g3"]
 [ext_resource type="Texture2D" uid="uid://cs00q3pyg0vfs" path="res://Sprites/Player/player_run.png" id="6_y6rho"]
 [ext_resource type="Texture2D" uid="uid://bejrulipwma7q" path="res://Sprites/dash_arrow.png" id="7_5bj17"]
 [ext_resource type="Texture2D" uid="uid://b0how0v2aq3dh" path="res://Sprites/dash_arrow_refresh.png" id="8_cvjxe"]
 [ext_resource type="Script" path="res://Scenes/Arrow.gd" id="8_yrrbb"]
+[ext_resource type="Texture2D" uid="uid://dtjwh8prsg10t" path="res://Sprites/particle.png" id="12_mi0hq"]
+[ext_resource type="Texture2D" uid="uid://627b1m84sypi" path="res://Sprites/dust particle.png" id="13_xgcss"]
+
+[sub_resource type="Gradient" id="Gradient_owkiu"]
+offsets = PackedFloat32Array(0, 0.194631, 0.261745)
+colors = PackedColorArray(1, 1, 1, 1, 0.5084, 0.82, 0.492, 1, 0.283185, 0.87, 0.2523, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tprwd"]
+gradient = SubResource("Gradient_owkiu")
+
+[sub_resource type="Curve" id="Curve_iuysq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.52448, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xg4g7"]
+curve = SubResource("Curve_iuysq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_unpf3"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 10.0
+emission_ring_inner_radius = 5.0
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 10.0
+angular_velocity_min = 2.0
+angular_velocity_max = 6.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_max = 180.0
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_xg4g7")
+color_ramp = SubResource("GradientTexture1D_tprwd")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vo4r0"]
+atlas = ExtResource("4_bdywa")
+region = Rect2(66, 0, 22, 29)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ce5q3"]
 atlas = ExtResource("4_jnhbv")
@@ -115,6 +157,14 @@ region = Rect2(0, 0, 22, 29)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_vo4r0")
+}],
+"loop": true,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ce5q3")
 }, {
 "duration": 1.0,
@@ -215,7 +265,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ddcb"]
-radius = 8.5
+radius = 7.5
 height = 22.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fcnhf"]
@@ -267,6 +317,39 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_pbroj"]
+colors = PackedColorArray(0.59, 0.59, 0.59, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1yah8"]
+gradient = SubResource("Gradient_pbroj")
+
+[sub_resource type="Curve" id="Curve_v1le8"]
+_data = [Vector2(0, 1), 0.0, -0.160428, 0, 0, Vector2(0.338889, 0.790909), 0.0, 0.0, 0, 0, Vector2(1, 0.0363636), -2.18182, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_an8m4"]
+curve = SubResource("Curve_v1le8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wyqin"]
+lifetime_randomness = 0.39
+emission_shape = 3
+emission_box_extents = Vector3(4, 1, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 90.0
+flatness = 1.0
+gravity = Vector3(0, 20, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+angular_velocity_min = 100.0
+angular_velocity_max = 100.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_max = 180.0
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_an8m4")
+color_ramp = SubResource("GradientTexture1D_1yah8")
+
 [sub_resource type="Gradient" id="Gradient_r7ksk"]
 offsets = PackedFloat32Array(0, 0.518072)
 colors = PackedColorArray(0.329158, 0.329158, 0.329158, 1, 0, 0, 0, 1)
@@ -281,7 +364,7 @@ fill_from = Vector2(0.5, 0.5)
 [node name="Player" type="CharacterBody2D"]
 floor_constant_speed = true
 floor_block_on_wall = false
-floor_snap_length = 2.0
+floor_snap_length = 3.0
 script = ExtResource("1_bsy6h")
 movement_data = ExtResource("2_krynv")
 ghost_node = ExtResource("3_1bcuk")
@@ -293,13 +376,20 @@ limit_left = 0
 limit_right = 7000
 limit_bottom = 360
 position_smoothing_enabled = true
-position_smoothing_speed = 10.0
+position_smoothing_speed = 8.0
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, -11)
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_unpf3")
+texture = ExtResource("12_mi0hq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_as_relative = false
 position = Vector2(0, 1.534)
 sprite_frames = SubResource("SpriteFrames_k0lcu")
-animation = &"fall"
+animation = &"idle"
 offset = Vector2(0, -15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -338,16 +428,23 @@ z_index = 5
 z_as_relative = false
 position = Vector2(0, -11)
 sprite_frames = SubResource("SpriteFrames_5cihk")
-frame = 1
-frame_progress = 1.0
+animation = &"dashing"
 offset = Vector2(50, 0)
 script = ExtResource("8_yrrbb")
 
 [node name="Center" type="Node2D" parent="."]
 position = Vector2(0, -11)
 
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_wyqin")
+texture = ExtResource("13_xgcss")
+lifetime = 0.5
+one_shot = true
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(0, -6)
+position = Vector2(30, -25)
 color = Color(0.0156863, 1, 0, 1)
 range_z_min = 2
 range_z_max = 4

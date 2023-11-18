@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blwvvthtvhau2"
-path="res://.godot/imported/lil lab tiles.png-ff51734bb4b0775889cc3ae3e7a7d661.ctex"
+uid="uid://627b1m84sypi"
+path="res://.godot/imported/dust particle.png-09ae7f0e403be3e65cb8873feb7f6ac2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/lil lab tiles.png"
-dest_files=["res://.godot/imported/lil lab tiles.png-ff51734bb4b0775889cc3ae3e7a7d661.ctex"]
+source_file="res://Sprites/dust particle.png"
+dest_files=["res://.godot/imported/dust particle.png-09ae7f0e403be3e65cb8873feb7f6ac2.ctex"]
 
 [params]
 
