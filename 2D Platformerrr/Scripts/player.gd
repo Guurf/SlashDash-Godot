@@ -15,6 +15,10 @@ extends CharacterBody2D
 @onready var dust_particles = $GPUParticles2D2
 
 @export var camera_bottom = 0
+@export var camera_top = -400
+@export var camera_left = 0
+@export var camera_right = 1000
+
 var slide_speed = 10.0
 var state = "free"
 var dash_dir
@@ -27,6 +31,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	camera_2d.limit_bottom = camera_bottom
+	camera_2d.limit_top = camera_top
+	camera_2d.limit_left = camera_left
+	camera_2d.limit_right = camera_right
 
 func _physics_process(delta):
 	var input_axis = Input.get_axis("left", "right")
