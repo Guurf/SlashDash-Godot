@@ -10,15 +10,21 @@ config_version=5
 
 [application]
 
-config/name="2D Platformerrr"
-run/main_scene="res://Scenes/world_1.tscn"
+config/name="Slash Dash DOS"
+run/main_scene="res://Scenes/level_1.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
-config/icon="res://Sprites/icon.svg"
+boot_splash/image="res://Pixel Guurf ICON 300x300 cropped.png"
+config/icon="res://slash dash icon idk LMAO.png"
+
+[debug]
+
+settings/stdout/print_fps=true
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=360
+window/size/mode=3
 window/size/window_width_override=1280
 window/size/window_height_override=720
 mouse_cursor/custom_image="res://Sprites/cursor.png"

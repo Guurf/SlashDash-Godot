@@ -30,8 +30,6 @@ func _ready():
 
 func _physics_process(delta):
 	var input_axis = Input.get_axis("left", "right")
-	#print("X Velocity: ", velocity.x)
-	#print("Y Velocity: ", velocity.y)
 	if state == "free":
 		movement_data = load("res://Movement Data/DefaultMovementData.tres")
 		collision_shape_2d.disabled = false
@@ -64,7 +62,6 @@ func _physics_process(delta):
 			dust_particles.emitting = true
 		else: 
 			dust_particles.emitting = false
-		print(dust_particles.emitting)
 		if Input.is_action_just_pressed("ui_up"):
 			movement_data = load("res://IceyMovementData.tres")
 		if Input.is_action_just_pressed("dash") and dash_count > 0 and not is_on_floor(): 
@@ -74,11 +71,13 @@ func _physics_process(delta):
 			ghost_timer.wait_time = 0.05
 			ghost_timer.start()
 			dash_dir = get_local_mouse_position().normalized()
+
 	elif state == "dash":
 		handle_dash(dash_dir)
 		handle_jump()
 		terminal_velocity()
 		move_and_slide()
+
 	elif state == "death":
 		animated_sprite_2d.scale = Vector2(1, 1)
 		animated_sprite_2d.z_index = 3
@@ -87,6 +86,7 @@ func _physics_process(delta):
 		collision_shape_2d.disabled = true
 		hazard_collision.disabled = true
 		move_and_slide()
+
 	elif state == "crouch":
 		if Input.is_action_just_released("down"): 
 			state = "free"
@@ -109,11 +109,9 @@ func _physics_process(delta):
 		move_and_slide()
 		var just_left_wall = was_on_wall and not is_on_wall()
 		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
-		#print(just_left_wall)
 		if just_left_wall or just_left_ledge:
 			coyote_jump_timer.start()
 			if just_left_wall:
-				print(get_wall_normal())
 				print("Y Velocity on exit: ", velocity_preprevious.y)
 				if abs(velocity_preprevious.y) > 300: velocity.x = get_wall_normal().x * (velocity_preprevious.y)
 				else: velocity.x = get_wall_normal().x * (velocity_preprevious.y / 2)
@@ -121,6 +119,7 @@ func _physics_process(delta):
 	update_animations(input_axis, delta)
 	velocity_preprevious = velocity_previous
 	velocity_previous = velocity
+
 #-------------------FUNCTIONS-------------------
 
 func handle_dash(dash_dir):
@@ -167,8 +166,8 @@ func handle_jump():
 			dash_count = 1
 		else:
 			buffer_frames_left = 10
-	elif Input.is_action_just_released("jump") and velocity.y < movement_data.jump_velocity / 2:
-		velocity.y = movement_data.jump_velocity / 2
+	elif Input.is_action_just_released("jump") and velocity.y < movement_data.jump_velocity / 3:
+		velocity.y = movement_data.jump_velocity / 3
 	
 func handle_acceleration(input_axis, delta):
 	if input_axis != 0:
@@ -245,7 +244,6 @@ func _on_animated_sprite_2d_animation_finished():
 func _on_ring_detector_area_entered(area):
 	dash_count = 1
 	var dash_ring_parent = area.get_parent()
-	print(dash_ring_parent)
 	dash_ring_parent.scale = Vector2(0.3, 0.7)
 	var ring_velocity = dash_ring_parent.launch_velocity
 	var ring_direction = Vector2(cos(dash_ring_parent.launch_direction), sin(dash_ring_parent.launch_direction))
