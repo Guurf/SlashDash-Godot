@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcfy3imespc6i"]
+
+[ext_resource type="Script" path="res://Screen.gd" id="1_a4ctu"]
+[ext_resource type="Texture2D" uid="uid://36bw3rbfir1m" path="res://Sprites/green square.png" id="1_p1n5t"]
+
+[node name="Screen" type="Node2D"]
+script = ExtResource("1_a4ctu")
+
+[node name="GreenSquare" type="Sprite2D" parent="."]
+position = Vector2(2, -14.5)
+scale = Vector2(0.37, 0.3)
+texture = ExtResource("1_p1n5t")

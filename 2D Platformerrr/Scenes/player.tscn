@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://kw3rcsx3xvtc"]
+[gd_scene load_steps=69 format=3 uid="uid://kw3rcsx3xvtc"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_bsy6h"]
 [ext_resource type="Resource" path="res://Movement Data/DefaultMovementData.tres" id="2_krynv"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b8iupojeapgns" path="res://Sprites/lil cmnt crouch.png" id="4_bdywa"]
 [ext_resource type="Texture2D" uid="uid://dakpdncwuslua" path="res://Sprites/cmnt death.png" id="4_jnhbv"]
 [ext_resource type="Texture2D" uid="uid://wl0qto1ulxx8" path="res://Sprites/Player/player.png" id="5_7r7g3"]
+[ext_resource type="Texture2D" uid="uid://bfbhvm6fao4x6" path="res://literally 1 pixel.png" id="6_18vgs"]
 [ext_resource type="Texture2D" uid="uid://cs00q3pyg0vfs" path="res://Sprites/Player/player_run.png" id="6_y6rho"]
 [ext_resource type="Texture2D" uid="uid://bejrulipwma7q" path="res://Sprites/dash_arrow.png" id="7_5bj17"]
 [ext_resource type="Texture2D" uid="uid://b0how0v2aq3dh" path="res://Sprites/dash_arrow_refresh.png" id="8_cvjxe"]
@@ -15,21 +16,30 @@
 [ext_resource type="Texture2D" uid="uid://dtjwh8prsg10t" path="res://Sprites/particle.png" id="12_mi0hq"]
 [ext_resource type="Texture2D" uid="uid://627b1m84sypi" path="res://Sprites/dust particle.png" id="13_xgcss"]
 
+[sub_resource type="Curve" id="Curve_hi23u"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 6.54544), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3gsrh"]
+curve = SubResource("Curve_hi23u")
+
 [sub_resource type="Gradient" id="Gradient_owkiu"]
 offsets = PackedFloat32Array(0, 0.194631, 0.261745)
-colors = PackedColorArray(1, 1, 1, 1, 0.5084, 0.82, 0.492, 1, 0.283185, 0.87, 0.2523, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.5084, 0.82, 0.492, 1, 0.400197, 0.984184, 0.364621, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_tprwd"]
 gradient = SubResource("Gradient_owkiu")
 
-[sub_resource type="Curve" id="Curve_iuysq"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.52448, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_v3o80"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0272727), -1.70734, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_xg4g7"]
-curve = SubResource("Curve_iuysq")
+[sub_resource type="CurveTexture" id="CurveTexture_or1d2"]
+curve = SubResource("Curve_v3o80")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_unpf3"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ui16h"]
 emission_shape = 6
 emission_ring_axis = Vector3(0, 0, 1)
 emission_ring_height = 1.0
@@ -41,14 +51,36 @@ spread = 180.0
 gravity = Vector3(0, 0, 0)
 initial_velocity_min = 2.0
 initial_velocity_max = 10.0
-angular_velocity_min = 2.0
-angular_velocity_max = 6.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-angle_max = 180.0
-scale_min = 0.5
-scale_curve = SubResource("CurveTexture_xg4g7")
+angle_max = 30.0
+angle_curve = SubResource("CurveTexture_3gsrh")
+scale_min = 0.8
+scale_curve = SubResource("CurveTexture_or1d2")
 color_ramp = SubResource("GradientTexture1D_tprwd")
+
+[sub_resource type="Gradient" id="Gradient_ej34d"]
+offsets = PackedFloat32Array(0, 0.194631, 0.371681, 0.964602)
+colors = PackedColorArray(1, 1, 1, 1, 0.5084, 0.82, 0.492, 1, 0.678364, 0.994997, 0.64892, 1, 0.4, 0.984314, 0.364706, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5ypa7"]
+gradient = SubResource("Gradient_ej34d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gdcd8"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 5.0
+emission_ring_inner_radius = 2.0
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+color_ramp = SubResource("GradientTexture1D_5ypa7")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vo4r0"]
 atlas = ExtResource("4_bdywa")
@@ -318,6 +350,12 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3eubu"]
+size = Vector2(12, 39)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3g021"]
+size = Vector3(5, 23, 1)
+
 [sub_resource type="Gradient" id="Gradient_pbroj"]
 colors = PackedColorArray(0.59, 0.59, 0.59, 1, 1, 1, 1, 0)
 
@@ -363,6 +401,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 3
 floor_constant_speed = true
 floor_block_on_wall = false
 floor_snap_length = 3.0
@@ -386,8 +425,14 @@ script = ExtResource("4_4mhp4")
 position = Vector2(0, -11)
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_unpf3")
+process_material = SubResource("ParticleProcessMaterial_ui16h")
 texture = ExtResource("12_mi0hq")
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="."]
+position = Vector2(0, -11)
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_gdcd8")
+texture = ExtResource("6_18vgs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_as_relative = false
@@ -436,6 +481,25 @@ animation = &"dashing"
 offset = Vector2(50, 0)
 script = ExtResource("12_46frg")
 
+[node name="SlashDetector" type="Area2D" parent="Arrow"]
+collision_layer = 0
+collision_mask = 4
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arrow/SlashDetector"]
+position = Vector2(56, 0)
+shape = SubResource("RectangleShape2D_3eubu")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Arrow/SlashDetector"]
+visible = false
+position = Vector2(56, 9.53674e-07)
+scale = Vector2(2.4, 1.73913)
+mesh = SubResource("BoxMesh_3g021")
+
+[node name="Slash_Timer" type="Timer" parent="Arrow"]
+wait_time = 0.2
+one_shot = true
+
 [node name="Center" type="Node2D" parent="."]
 position = Vector2(0, -11)
 
@@ -448,7 +512,7 @@ lifetime = 0.5
 one_shot = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(30, -25)
+position = Vector2(31, -24)
 color = Color(0.0156863, 1, 0, 1)
 range_z_min = 2
 range_z_max = 4
@@ -459,3 +523,4 @@ texture = SubResource("GradientTexture2D_50nbg")
 [connection signal="timeout" from="GhostTimer" to="." method="_on_ghost_timer_timeout"]
 [connection signal="area_entered" from="RingDetector" to="." method="_on_ring_detector_area_entered"]
 [connection signal="area_entered" from="HazardDetector" to="." method="_on_hazard_detector_area_entered"]
+[connection signal="area_entered" from="Arrow/SlashDetector" to="Arrow" method="_on_slash_detector_area_entered"]

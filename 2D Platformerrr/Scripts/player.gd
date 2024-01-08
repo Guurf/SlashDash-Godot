@@ -3,31 +3,38 @@ extends CharacterBody2D
 @export var movement_data : PlayerMovementData
 @export var ghost_node : PackedScene
 
-@onready var camera_2d = $Camera2D
 @onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var collision_shape_2d = $CollisionShape2D
+@onready var hazard_collision = $HazardDetector/CollisionShape2D
+
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var dash_timer = $DashTimer
 @onready var ghost_timer = $GhostTimer
-@onready var starting_position = global_position
-@onready var collision_shape_2d = $CollisionShape2D
-@onready var hazard_collision = $HazardDetector/CollisionShape2D
+
 @onready var dash_particles = $GPUParticles2D
 @onready var dust_particles = $GPUParticles2D2
+@onready var bhop_particles = $GPUParticles2D3
+
+@onready var starting_position = global_position
+
+@onready var camera_2d = $Camera2D
 
 @export var camera_bottom = 0
 @export var camera_top = -400
 @export var camera_left = 0
 @export var camera_right = 1000
 
-var slide_speed = 10.0
 var state = "free"
+
 var dash_dir
 var dash_count = 1
+
 var buffer_frames_left = 0
-var velocity_previous = Vector2()
-var velocity_preprevious = Vector2()
 var hit_the_ground = false
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+var velocity_previous = Vector2()
+var velocity_preprevious = Vector2()
 
 func _ready():
 	camera_2d.limit_bottom = camera_bottom
@@ -42,10 +49,16 @@ func _physics_process(delta):
 		collision_shape_2d.disabled = false
 		hazard_collision.disabled = false
 		animated_sprite_2d.z_index = 0
+		
+		if !ghost_timer.is_stopped(): bhop_particles.emitting = true
 		if dash_particles.emitting == true: dash_particles.emitting = false
 		if animated_sprite_2d.rotation_degrees != 0: animated_sprite_2d.rotation_degrees = 0
 		if floor_max_angle != deg_to_rad(45): floor_max_angle = deg_to_rad(45)
-		if velocity.x <= 300 and velocity.x >= -300: ghost_timer.stop()
+		
+		if velocity.x <= 300 and velocity.x >= -300: 
+			ghost_timer.stop()
+			bhop_particles.emitting = false
+			
 		if Input.is_action_pressed("down"): 
 			state = "crouch"
 			animated_sprite_2d.scale.x = remap(abs(300), 0, abs(1700), 1.2, 2.0)
@@ -53,6 +66,7 @@ func _physics_process(delta):
 			if velocity.x > 0 : velocity.x -= 5
 			elif velocity.x < 0 : velocity.x += 5
 		elif velocity.x < 0: velocity.x += 5
+		
 		apply_gravity(delta)
 		handle_jump()
 		handle_acceleration(input_axis, delta)
@@ -61,6 +75,7 @@ func _physics_process(delta):
 		var was_on_floor = is_on_floor()
 		terminal_velocity()
 		move_and_slide()
+		
 		var just_left_ledge = was_on_floor and not is_on_floor() and velocity.y >= 0
 		var just_hit_ground = is_on_floor() and not was_on_floor
 		if just_left_ledge:
@@ -69,8 +84,10 @@ func _physics_process(delta):
 			dust_particles.emitting = true
 		else: 
 			dust_particles.emitting = false
+		
 		if Input.is_action_just_pressed("ui_up"):
 			movement_data = load("res://IceyMovementData.tres")
+		
 		if Input.is_action_just_pressed("dash") and dash_count > 0 and not is_on_floor(): 
 			dash_count -= 1
 			state = "dash"
@@ -103,6 +120,8 @@ func _physics_process(delta):
 		if is_on_wall(): animated_sprite_2d.rotation_degrees = rad_to_deg(get_wall_normal().x)
 		else: animated_sprite_2d.rotation_degrees = rad_to_deg(get_floor_normal().x)
 		input_axis = 0
+		if velocity.x <= 300 and velocity.x >= -300: 
+			bhop_particles.emitting = false
 		floor_max_angle = deg_to_rad(0)
 		ghost_timer.stop()
 		apply_gravity(delta)
@@ -152,7 +171,8 @@ func apply_gravity(delta):
 func handle_jump():
 	var wave_jump = 1.0
 	if state != "crouch":
-		if velocity.x > 200 or velocity.x < -200: wave_jump = 1.8
+		if velocity.x > 200 or velocity.x < -200: 
+			wave_jump = 1.8
 		else: wave_jump = 1.0
 	if buffer_frames_left > 0:
 		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
@@ -237,11 +257,11 @@ func _on_hazard_detector_area_entered(area):
 	animated_sprite_2d.play("death")
 	state = "death"
 	velocity = -velocity_previous
+
 func death():
-	position = starting_position
-	animated_sprite_2d.play("idle")
-	state = "free"
-	velocity = Vector2(0, 0)
+	SceneTransition.change_scene("res://Scenes/level_1.tscn")
+	visible = false
+	#state = "free"
 
 
 func _on_animated_sprite_2d_animation_finished():

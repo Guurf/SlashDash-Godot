@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://cewav3n4gjj4"]
+
+[ext_resource type="Script" path="res://Scenes/wall_pad.gd" id="1_w5s0a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lsny5"]
+size = Vector2(16, 64)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ni3k1"]
+albedo_color = Color(0.886275, 0.384314, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_eif7y"]
+material = SubResource("StandardMaterial3D_ni3k1")
+size = Vector3(16, 64, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4tgln"]
+size = Vector2(8, 64)
+
+[node name="WallPad" type="Node2D"]
+script = ExtResource("1_w5s0a")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_lsny5")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D/CollisionShape2D"]
+z_index = 4
+mesh = SubResource("BoxMesh_eif7y")
+
+[node name="RightBounce" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBounce"]
+position = Vector2(8, 0)
+shape = SubResource("RectangleShape2D_4tgln")
+
+[node name="LeftBounce" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBounce"]
+position = Vector2(-8, 0)
+shape = SubResource("RectangleShape2D_4tgln")
+
+[connection signal="area_entered" from="RightBounce" to="." method="_on_right_bounce_area_entered"]
+[connection signal="area_entered" from="LeftBounce" to="." method="_on_left_bounce_area_entered"]
