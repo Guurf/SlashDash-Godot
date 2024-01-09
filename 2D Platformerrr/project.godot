@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.0", "Forward Plus")
 boot_splash/image="res://Pixel Guurf ICON 300x300 cropped.png"
 config/icon="res://slash dash icon idk LMAO.png"
 
+[audio]
+
+driver/output_latency=1
+
 [autoload]
 
 SceneTransition="*res://Scenes/scene_transition.tscn"

@@ -19,6 +19,11 @@ extends CharacterBody2D
 
 @onready var camera_2d = $Camera2D
 
+@onready var dash_sound = $DashSound
+@onready var jump_sound = $JumpSound
+@onready var b_hop_sound = $BHopSound
+@onready var land_sound = $LandSound
+
 @export var camera_bottom = 0
 @export var camera_top = -400
 @export var camera_left = 0
@@ -81,6 +86,7 @@ func _physics_process(delta):
 		if just_left_ledge:
 			coyote_jump_timer.start()
 		if just_hit_ground:
+			land_sound.play()
 			dust_particles.emitting = true
 		else: 
 			dust_particles.emitting = false
@@ -91,6 +97,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("dash") and dash_count > 0 and not is_on_floor(): 
 			dash_count -= 1
 			state = "dash"
+			play_dash()
 			dash_timer.start()
 			ghost_timer.wait_time = 0.05
 			ghost_timer.start()
@@ -174,27 +181,33 @@ func handle_jump():
 		if velocity.x > 200 or velocity.x < -200: 
 			wave_jump = 1.8
 		else: wave_jump = 1.0
+	
 	if buffer_frames_left > 0:
 		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
 			velocity.y = movement_data.jump_velocity
+			play_jump(wave_jump)
 			if state != "crouch": velocity.x *= wave_jump
 			dash_count = 1
 			buffer_frames_left = 0
 		else:
 			buffer_frames_left -= 1
+		
 	elif Input.is_action_just_pressed("jump"):
 		if state == "crouch" && get_wall_normal().x != 1:
 			floor_max_angle = deg_to_rad(45)
 			if is_on_wall(): 
 				velocity.x = get_wall_normal().x * velocity.y
+				play_jump(wave_jump)
 		if is_on_floor() or coyote_jump_timer.time_left > 0.0:
 			velocity.y = movement_data.jump_velocity
+			play_jump(wave_jump)
 			if state != "crouch": velocity.x *= wave_jump
 			dash_count = 1
 		else:
 			buffer_frames_left = 10
 	elif Input.is_action_just_released("jump") and velocity.y < movement_data.jump_velocity / 3:
 		velocity.y = movement_data.jump_velocity / 3
+		#jump_sound.stop()
 	
 func handle_acceleration(input_axis, delta):
 	if input_axis != 0:
@@ -246,9 +259,9 @@ func add_ghost():
 		ghost_col = Color(2, 7, 2, 0.1)
 		ghost_timer.wait_time = 0.1
 	ghost.set_property(position, animated_sprite_2d.scale, flip_axis, ghost_col)
-	get_tree().current_scene.add_child(ghost)
-
-
+	get_tree().current_scene.add_child(ghost) 
+	
+	
 func _on_ghost_timer_timeout():
 	add_ghost()
 
@@ -259,10 +272,22 @@ func _on_hazard_detector_area_entered(area):
 	velocity = -velocity_previous
 
 func death():
-	SceneTransition.change_scene("res://Scenes/level_1.tscn")
+	var current_scene = get_tree().current_scene.scene_file_path
+	SceneTransition.change_scene(current_scene)
 	visible = false
 	#state = "free"
 
+func play_jump(wave_jump):
+	#var rng = RandomNumberGenerator.new()
+	#jump_sound.pitch_scale = rng.randf_range(0.9, 1.3)
+	if wave_jump > 1.0:
+		b_hop_sound.play()
+	else: jump_sound.play()
+
+func play_dash():
+	var rng = RandomNumberGenerator.new()
+	dash_sound.pitch_scale = rng.randf_range(0.9, 1.3)
+	dash_sound.play()
 
 func _on_animated_sprite_2d_animation_finished():
 	if animated_sprite_2d.animation == "death": death()

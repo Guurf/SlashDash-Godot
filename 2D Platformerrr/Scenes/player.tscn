@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://kw3rcsx3xvtc"]
+[gd_scene load_steps=73 format=3 uid="uid://kw3rcsx3xvtc"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_bsy6h"]
 [ext_resource type="Resource" path="res://Movement Data/DefaultMovementData.tres" id="2_krynv"]
@@ -15,6 +15,10 @@
 [ext_resource type="Script" path="res://Scripts/Arrow.gd" id="12_46frg"]
 [ext_resource type="Texture2D" uid="uid://dtjwh8prsg10t" path="res://Sprites/particle.png" id="12_mi0hq"]
 [ext_resource type="Texture2D" uid="uid://627b1m84sypi" path="res://Sprites/dust particle.png" id="13_xgcss"]
+[ext_resource type="AudioStream" uid="uid://do6meubyl0jb" path="res://Sounds/Dash5.wav" id="16_f1ivd"]
+[ext_resource type="AudioStream" uid="uid://byp6sa2uvskmj" path="res://Sounds/snJump.wav" id="17_h8btj"]
+[ext_resource type="AudioStream" uid="uid://kmlj1v0ayh2h" path="res://Sounds/snLanding - Copy.wav" id="17_l5nq2"]
+[ext_resource type="AudioStream" uid="uid://cj3hyug4c5oe5" path="res://Sounds/click(9).wav" id="18_gijme"]
 
 [sub_resource type="Curve" id="Curve_hi23u"]
 min_value = -360.0
@@ -518,6 +522,22 @@ range_z_min = 2
 range_z_max = 4
 range_layer_max = 1
 texture = SubResource("GradientTexture2D_50nbg")
+
+[node name="DashSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_f1ivd")
+volume_db = -15.0
+
+[node name="LandSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_l5nq2")
+volume_db = -10.0
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_h8btj")
+volume_db = -5.0
+
+[node name="BHopSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_gijme")
+volume_db = -15.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="GhostTimer" to="." method="_on_ghost_timer_timeout"]

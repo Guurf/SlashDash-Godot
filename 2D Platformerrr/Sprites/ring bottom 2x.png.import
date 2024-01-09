@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dkmsat62xmgg5"
-path="res://.godot/imported/ring bottom 2x.png-314274095218749f61b39a22d2d0746d.ctex"
+path="res://.godot/imported/ring bottom 2x.png-32f631b07f32bd05fef8e9e564bf6960.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ring bottom 2x.png"
-dest_files=["res://.godot/imported/ring bottom 2x.png-314274095218749f61b39a22d2d0746d.ctex"]
+source_file="res://Sprites/ring bottom 2x.png"
+dest_files=["res://.godot/imported/ring bottom 2x.png-32f631b07f32bd05fef8e9e564bf6960.ctex"]
 
 [params]
 

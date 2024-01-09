@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://b08hrtifh6qdl"]
 
-[ext_resource type="PackedScene" uid="uid://cholc1afgl13v" path="res://Scenes/player.tscn" id="1_uerdk"]
+[ext_resource type="PackedScene" uid="uid://kw3rcsx3xvtc" path="res://Scenes/player.tscn" id="1_uerdk"]
 [ext_resource type="Texture2D" uid="uid://blwvvthtvhau2" path="res://Sprites/lil lab tiles.png" id="2_snlio"]
 [ext_resource type="PackedScene" uid="uid://b4loqodswqvnw" path="res://Scenes/spikes.tscn" id="3_dbu6c"]
-[ext_resource type="PackedScene" uid="uid://dlw1q0wao0c7l" path="res://Scenes/dash_ring.tscn" id="4_jkd11"]
+[ext_resource type="PackedScene" path="res://Scenes/dash_ring.tscn" id="4_jkd11"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3iyl0"]
 texture = ExtResource("2_snlio")
@@ -108,6 +108,8 @@ sources/0 = SubResource("TileSetAtlasSource_3iyl0")
 [node name="Player" parent="." instance=ExtResource("1_uerdk")]
 position = Vector2(1192, -80)
 camera_bottom = 96
+camera_top = -640
+camera_right = 2000
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = 3
