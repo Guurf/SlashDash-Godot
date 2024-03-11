@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://627b1m84sypi"
-path="res://.godot/imported/dust particle.png-09ae7f0e403be3e65cb8873feb7f6ac2.ctex"
+uid="uid://b0how0v2aq3dh"
+path="res://.godot/imported/dash_arrow_refresh.png-6d538b273fc786d155d97b70a9d62dbd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/dust particle.png"
-dest_files=["res://.godot/imported/dust particle.png-09ae7f0e403be3e65cb8873feb7f6ac2.ctex"]
+source_file="res://Sprites/Player/dash_arrow_refresh.png"
+dest_files=["res://.godot/imported/dash_arrow_refresh.png-6d538b273fc786d155d97b70a9d62dbd.ctex"]
 
 [params]
 

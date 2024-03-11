@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xdbmismaxjrv"
-path="res://.godot/imported/tiled bg.png-da16340d0c3ab88d50bcb9297b2e8bdf.ctex"
+uid="uid://70pgaoqg2onr"
+path="res://.godot/imported/chain.png-00c1aeb7c760bed3da524be698bebc16.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/tiled bg.png"
-dest_files=["res://.godot/imported/tiled bg.png-da16340d0c3ab88d50bcb9297b2e8bdf.ctex"]
+source_file="res://Sprites/Tiles/chain.png"
+dest_files=["res://.godot/imported/chain.png-00c1aeb7c760bed3da524be698bebc16.ctex"]
 
 [params]
 

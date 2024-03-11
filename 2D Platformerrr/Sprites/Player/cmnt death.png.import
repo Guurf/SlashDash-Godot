@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bejrulipwma7q"
-path="res://.godot/imported/dash_arrow.png-297ee31f8788398a558516ad2fb025d3.ctex"
+uid="uid://dakpdncwuslua"
+path="res://.godot/imported/cmnt death.png-0b32c4c57630a8c35a531db04468ad33.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/dash_arrow.png"
-dest_files=["res://.godot/imported/dash_arrow.png-297ee31f8788398a558516ad2fb025d3.ctex"]
+source_file="res://Sprites/Player/cmnt death.png"
+dest_files=["res://.godot/imported/cmnt death.png-0b32c4c57630a8c35a531db04468ad33.ctex"]
 
 [params]
 

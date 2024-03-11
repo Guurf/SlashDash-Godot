@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Texture2D" uid="uid://dsdgag637w3sa" path="res://Sprites/ring top 2x.png" id="1_afo6k"]
+[ext_resource type="Texture2D" uid="uid://dsdgag637w3sa" path="res://Sprites/Tiles/ring top 2x.png" id="1_afo6k"]
 [ext_resource type="Script" path="res://Scripts/dash_ring.gd" id="1_kyel5"]
-[ext_resource type="Texture2D" uid="uid://dkmsat62xmgg5" path="res://Sprites/ring bottom 2x.png" id="2_wqk57"]
+[ext_resource type="Texture2D" uid="uid://dkmsat62xmgg5" path="res://Sprites/Tiles/ring bottom 2x.png" id="2_wqk57"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5jxjh"]
 radius = 12.0

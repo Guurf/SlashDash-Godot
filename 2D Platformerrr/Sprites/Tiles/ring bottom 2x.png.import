@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://uiypkgccu47n"
-path="res://.godot/imported/cursor.png-97af3808e5ea1d52e364c821589a41df.ctex"
+uid="uid://dkmsat62xmgg5"
+path="res://.godot/imported/ring bottom 2x.png-3a7339470adae5bdb1bba09568ab2dd3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/cursor.png"
-dest_files=["res://.godot/imported/cursor.png-97af3808e5ea1d52e364c821589a41df.ctex"]
+source_file="res://Sprites/Tiles/ring bottom 2x.png"
+dest_files=["res://.godot/imported/ring bottom 2x.png-3a7339470adae5bdb1bba09568ab2dd3.ctex"]
 
 [params]
 

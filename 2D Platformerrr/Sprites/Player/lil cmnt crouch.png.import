@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0how0v2aq3dh"
-path="res://.godot/imported/dash_arrow_refresh.png-610872fa5742694be1cae220a3272239.ctex"
+uid="uid://b8iupojeapgns"
+path="res://.godot/imported/lil cmnt crouch.png-988db6ed358682294c79a17ef32b6e5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/dash_arrow_refresh.png"
-dest_files=["res://.godot/imported/dash_arrow_refresh.png-610872fa5742694be1cae220a3272239.ctex"]
+source_file="res://Sprites/Player/lil cmnt crouch.png"
+dest_files=["res://.godot/imported/lil cmnt crouch.png-988db6ed358682294c79a17ef32b6e5a.ctex"]
 
 [params]
 

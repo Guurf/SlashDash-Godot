@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://dasu28fwwa1x8"]
+
+[ext_resource type="Script" path="res://Scenes/button.gd" id="1_n8fa7"]
+[ext_resource type="Texture2D" uid="uid://bpwp2koppga6b" path="res://Sprites/Tiles/button.png" id="2_wfk5l"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_xe7pp"]
+size = Vector3(32, 8, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yf6ds"]
+size = Vector2(22, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhjjp"]
+atlas = ExtResource("2_wfk5l")
+region = Rect2(0, 0, 32, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4ffn"]
+atlas = ExtResource("2_wfk5l")
+region = Rect2(32, 0, 32, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_usitx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhjjp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4ffn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Button" type="Node2D"]
+script = ExtResource("1_n8fa7")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+visible = false
+position = Vector2(0, -4)
+mesh = SubResource("BoxMesh_xe7pp")
+metadata/_edit_group_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_yf6ds")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_usitx")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-16, 0, -11, -5, 11, -5, 16, 0)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

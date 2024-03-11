@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blwvvthtvhau2"
-path="res://.godot/imported/lil lab tiles.png-ff51734bb4b0775889cc3ae3e7a7d661.ctex"
+uid="uid://dsdgag637w3sa"
+path="res://.godot/imported/ring top 2x.png-cded0b5805534dfed5d48c653c8b5513.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/lil lab tiles.png"
-dest_files=["res://.godot/imported/lil lab tiles.png-ff51734bb4b0775889cc3ae3e7a7d661.ctex"]
+source_file="res://Sprites/Tiles/ring top 2x.png"
+dest_files=["res://.godot/imported/ring top 2x.png-cded0b5805534dfed5d48c653c8b5513.ctex"]
 
 [params]
 

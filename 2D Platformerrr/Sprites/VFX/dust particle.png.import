@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkmsat62xmgg5"
-path="res://.godot/imported/ring bottom 2x.png-32f631b07f32bd05fef8e9e564bf6960.ctex"
+uid="uid://627b1m84sypi"
+path="res://.godot/imported/dust particle.png-a6787e191fb1f6d5f9508c2f4b7a6bdf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/ring bottom 2x.png"
-dest_files=["res://.godot/imported/ring bottom 2x.png-32f631b07f32bd05fef8e9e564bf6960.ctex"]
+source_file="res://Sprites/VFX/dust particle.png"
+dest_files=["res://.godot/imported/dust particle.png-a6787e191fb1f6d5f9508c2f4b7a6bdf.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8iupojeapgns"
-path="res://.godot/imported/lil cmnt crouch.png-c1b26c04a1a4ac0195f5b1e2d3c0cc7e.ctex"
+uid="uid://dtjwh8prsg10t"
+path="res://.godot/imported/particle.png-54f1fcf42fe5164714d74f270760fbef.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/lil cmnt crouch.png"
-dest_files=["res://.godot/imported/lil cmnt crouch.png-c1b26c04a1a4ac0195f5b1e2d3c0cc7e.ctex"]
+source_file="res://Sprites/VFX/particle.png"
+dest_files=["res://.godot/imported/particle.png-54f1fcf42fe5164714d74f270760fbef.ctex"]
 
 [params]
 

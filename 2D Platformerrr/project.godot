@@ -28,9 +28,10 @@ SceneTransition="*res://Scenes/scene_transition.tscn"
 
 window/size/viewport_width=640
 window/size/viewport_height=360
+window/size/mode=3
 window/size/window_width_override=1280
 window/size/window_height_override=720
-mouse_cursor/custom_image="res://Sprites/cursor.png"
+mouse_cursor/custom_image="res://Sprites/UI/cursor.png"
 mouse_cursor/custom_image_hotspot=Vector2(1, 1)
 window/stretch/mode="viewport"
 

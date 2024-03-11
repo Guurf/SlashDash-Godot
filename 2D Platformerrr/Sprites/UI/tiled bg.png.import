@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtjwh8prsg10t"
-path="res://.godot/imported/particle.png-b9220a5251ac0fda38f88c50f91ea1c0.ctex"
+uid="uid://xdbmismaxjrv"
+path="res://.godot/imported/tiled bg.png-691e3ac3a28d905e50d67b10fa1cc869.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/particle.png"
-dest_files=["res://.godot/imported/particle.png-b9220a5251ac0fda38f88c50f91ea1c0.ctex"]
+source_file="res://Sprites/UI/tiled bg.png"
+dest_files=["res://.godot/imported/tiled bg.png-691e3ac3a28d905e50d67b10fa1cc869.ctex"]
 
 [params]
 

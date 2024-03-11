@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlvfagw3pyv62"]
+
+[ext_resource type="Texture2D" uid="uid://70pgaoqg2onr" path="res://Sprites/Tiles/chain.png" id="1_q1hqg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j58am"]
+radius = 2.49606
+height = 16.0
+
+[node name="Chain" type="RigidBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_q1hqg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.496063, 0)
+shape = SubResource("CapsuleShape2D_j58am")

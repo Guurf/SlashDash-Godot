@@ -1,20 +1,20 @@
-[gd_scene load_steps=73 format=3 uid="uid://kw3rcsx3xvtc"]
+[gd_scene load_steps=73 format=3 uid="uid://c7why7j72cc4d"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_bsy6h"]
 [ext_resource type="Resource" path="res://Movement Data/DefaultMovementData.tres" id="2_krynv"]
 [ext_resource type="PackedScene" uid="uid://7gk6qxaw8bqp" path="res://Scenes/ghost.tscn" id="3_1bcuk"]
 [ext_resource type="Script" path="res://Scenes/PlayerCamera.gd" id="4_4mhp4"]
 [ext_resource type="Texture2D" uid="uid://cxr5wuw4daeva" path="res://Sprites/Player/player_jump.png" id="4_a8s05"]
-[ext_resource type="Texture2D" uid="uid://b8iupojeapgns" path="res://Sprites/lil cmnt crouch.png" id="4_bdywa"]
-[ext_resource type="Texture2D" uid="uid://dakpdncwuslua" path="res://Sprites/cmnt death.png" id="4_jnhbv"]
+[ext_resource type="Texture2D" uid="uid://dtjwh8prsg10t" path="res://Sprites/VFX/particle.png" id="5_2ptmn"]
 [ext_resource type="Texture2D" uid="uid://wl0qto1ulxx8" path="res://Sprites/Player/player.png" id="5_7r7g3"]
 [ext_resource type="Texture2D" uid="uid://bfbhvm6fao4x6" path="res://literally 1 pixel.png" id="6_18vgs"]
 [ext_resource type="Texture2D" uid="uid://cs00q3pyg0vfs" path="res://Sprites/Player/player_run.png" id="6_y6rho"]
-[ext_resource type="Texture2D" uid="uid://bejrulipwma7q" path="res://Sprites/dash_arrow.png" id="7_5bj17"]
-[ext_resource type="Texture2D" uid="uid://b0how0v2aq3dh" path="res://Sprites/dash_arrow_refresh.png" id="8_cvjxe"]
+[ext_resource type="Texture2D" uid="uid://b8iupojeapgns" path="res://Sprites/Player/lil cmnt crouch.png" id="7_0v0p4"]
+[ext_resource type="Texture2D" uid="uid://dakpdncwuslua" path="res://Sprites/Player/cmnt death.png" id="8_5gmh6"]
 [ext_resource type="Script" path="res://Scripts/Arrow.gd" id="12_46frg"]
-[ext_resource type="Texture2D" uid="uid://dtjwh8prsg10t" path="res://Sprites/particle.png" id="12_mi0hq"]
-[ext_resource type="Texture2D" uid="uid://627b1m84sypi" path="res://Sprites/dust particle.png" id="13_xgcss"]
+[ext_resource type="Texture2D" uid="uid://bejrulipwma7q" path="res://Sprites/Player/dash_arrow.png" id="12_ccjcx"]
+[ext_resource type="Texture2D" uid="uid://b0how0v2aq3dh" path="res://Sprites/Player/dash_arrow_refresh.png" id="13_ovd4w"]
+[ext_resource type="Texture2D" uid="uid://627b1m84sypi" path="res://Sprites/VFX/dust particle.png" id="15_ug55r"]
 [ext_resource type="AudioStream" uid="uid://do6meubyl0jb" path="res://Sounds/Dash5.wav" id="16_f1ivd"]
 [ext_resource type="AudioStream" uid="uid://byp6sa2uvskmj" path="res://Sounds/snJump.wav" id="17_h8btj"]
 [ext_resource type="AudioStream" uid="uid://kmlj1v0ayh2h" path="res://Sounds/snLanding - Copy.wav" id="17_l5nq2"]
@@ -87,43 +87,43 @@ orbit_velocity_max = 0.0
 color_ramp = SubResource("GradientTexture1D_5ypa7")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vo4r0"]
-atlas = ExtResource("4_bdywa")
+atlas = ExtResource("7_0v0p4")
 region = Rect2(66, 0, 22, 29)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ce5q3"]
-atlas = ExtResource("4_jnhbv")
+atlas = ExtResource("8_5gmh6")
 region = Rect2(0, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f68se"]
-atlas = ExtResource("4_jnhbv")
+atlas = ExtResource("8_5gmh6")
 region = Rect2(53, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ifk65"]
-atlas = ExtResource("4_jnhbv")
+atlas = ExtResource("8_5gmh6")
 region = Rect2(106, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bymvh"]
-atlas = ExtResource("4_jnhbv")
+atlas = ExtResource("8_5gmh6")
 region = Rect2(159, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nr458"]
-atlas = ExtResource("4_jnhbv")
+atlas = ExtResource("8_5gmh6")
 region = Rect2(212, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x4aeq"]
-atlas = ExtResource("4_jnhbv")
+atlas = ExtResource("8_5gmh6")
 region = Rect2(265, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wbwua"]
-atlas = ExtResource("4_jnhbv")
+atlas = ExtResource("8_5gmh6")
 region = Rect2(318, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jp050"]
-atlas = ExtResource("4_jnhbv")
+atlas = ExtResource("8_5gmh6")
 region = Rect2(371, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7fupl"]
-atlas = ExtResource("4_jnhbv")
+atlas = ExtResource("8_5gmh6")
 region = Rect2(424, 0, 53, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cu3vi"]
@@ -309,19 +309,19 @@ height = 22.0
 size = Vector2(13, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_klhi2"]
-atlas = ExtResource("7_5bj17")
+atlas = ExtResource("12_ccjcx")
 region = Rect2(64, 0, 32, 26)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i33gu"]
-atlas = ExtResource("7_5bj17")
+atlas = ExtResource("12_ccjcx")
 region = Rect2(32, 0, 32, 26)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iff7g"]
-atlas = ExtResource("8_cvjxe")
+atlas = ExtResource("13_ovd4w")
 region = Rect2(0, 0, 32, 26)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d7o12"]
-atlas = ExtResource("8_cvjxe")
+atlas = ExtResource("13_ovd4w")
 region = Rect2(32, 0, 32, 26)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5cihk"]
@@ -394,7 +394,7 @@ scale_curve = SubResource("CurveTexture_an8m4")
 color_ramp = SubResource("GradientTexture1D_1yah8")
 
 [sub_resource type="Gradient" id="Gradient_r7ksk"]
-offsets = PackedFloat32Array(0, 0.518072)
+offsets = PackedFloat32Array(0, 0.756098)
 colors = PackedColorArray(0.329158, 0.329158, 0.329158, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_50nbg"]
@@ -430,7 +430,7 @@ position = Vector2(0, -11)
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_ui16h")
-texture = ExtResource("12_mi0hq")
+texture = ExtResource("5_2ptmn")
 
 [node name="GPUParticles2D3" type="GPUParticles2D" parent="."]
 position = Vector2(0, -11)
@@ -511,21 +511,23 @@ position = Vector2(0, -11)
 emitting = false
 amount = 50
 process_material = SubResource("ParticleProcessMaterial_wyqin")
-texture = ExtResource("13_xgcss")
+texture = ExtResource("15_ug55r")
 lifetime = 0.5
 one_shot = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(31, -24)
+position = Vector2(-1, -10)
 color = Color(0.0156863, 1, 0, 1)
-range_z_min = 2
-range_z_max = 4
+range_z_min = -1
+range_z_max = -1
 range_layer_max = 1
+shadow_enabled = true
 texture = SubResource("GradientTexture2D_50nbg")
 
 [node name="DashSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_f1ivd")
 volume_db = -15.0
+pitch_scale = 0.64
 
 [node name="LandSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_l5nq2")
@@ -537,7 +539,7 @@ volume_db = -5.0
 
 [node name="BHopSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_gijme")
-volume_db = -15.0
+volume_db = -10.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="GhostTimer" to="." method="_on_ghost_timer_timeout"]

@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5lwt0n5nawuc"]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://Scripts/Oscilate.gd" id="1_2hjx6"]
-[ext_resource type="Texture2D" uid="uid://byguw6og6loqv" path="res://Sprites/dev crusher.png" id="2_36yn4"]
-[ext_resource type="PackedScene" uid="uid://be0s8ekwrvane" path="res://Scenes/hazard_area.tscn" id="3_b605q"]
+[ext_resource type="Texture2D" uid="uid://byguw6og6loqv" path="res://Sprites/Tiles/dev crusher.png" id="2_36yn4"]
+[ext_resource type="PackedScene" uid="uid://be0s8ekwrvane" path="res://Level/Objects/hazard_area.tscn" id="3_b605q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gyi7i"]
 size = Vector2(52, 12.5)
