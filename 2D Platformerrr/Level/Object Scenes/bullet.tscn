@@ -1,0 +1,100 @@
+[gd_scene load_steps=14 format=3 uid="uid://b0626vhxq1s8c"]
+
+[ext_resource type="Script" path="res://Level/Object Scripts/Bullet.gd" id="1_5sobh"]
+[ext_resource type="Texture2D" uid="uid://d4agc0j4txdj0" path="res://Sprites/Tiles/bullet.png" id="2_pwbnj"]
+[ext_resource type="PackedScene" uid="uid://be0s8ekwrvane" path="res://Level/Object Scenes/hazard_area.tscn" id="3_2ckbq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pq8co"]
+atlas = ExtResource("2_pwbnj")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skedi"]
+atlas = ExtResource("2_pwbnj")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lymtb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pq8co")
+}],
+"loop": true,
+"name": &"break",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skedi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_40gso"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e1ads"]
+radius = 4.0
+
+[sub_resource type="Gradient" id="Gradient_nw2jx"]
+offsets = PackedFloat32Array(0.154321, 0.617284)
+colors = PackedColorArray(0.894118, 0.231373, 0.266667, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kbylv"]
+gradient = SubResource("Gradient_nw2jx")
+
+[sub_resource type="Curve" id="Curve_gww7v"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.989637, 0.0181818), -0.421091, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_o2ayj"]
+curve = SubResource("Curve_gww7v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6gfru"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 2.0
+emission_ring_inner_radius = 0.0
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 10.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = -50.0
+initial_velocity_max = -50.0
+angular_velocity_min = -200.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_min = -373.4
+scale_min = 4.0
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_o2ayj")
+color_ramp = SubResource("GradientTexture1D_kbylv")
+
+[node name="Bullet" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_5sobh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lymtb")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_40gso")
+
+[node name="HazardArea" parent="." instance=ExtResource("3_2ckbq")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HazardArea"]
+shape = SubResource("CircleShape2D_e1ads")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Trail Particles" type="GPUParticles2D" parent="."]
+z_index = -1
+position = Vector2(0, 1)
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_6gfru")
+lifetime = 0.5
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

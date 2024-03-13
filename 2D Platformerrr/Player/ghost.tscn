@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture2D" uid="uid://wl0qto1ulxx8" path="res://Sprites/Player/player.png" id="1_u078d"]
+[ext_resource type="Script" path="res://Player/Ghost.gd" id="2_d36vi"]
+
+[sub_resource type="Gradient" id="Gradient_2wrxm"]
+offsets = PackedFloat32Array(0, 0.692771)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8v4yp"]
+gradient = SubResource("Gradient_2wrxm")
+fill = 1
+fill_from = Vector2(0.50655, 0.524017)
+
+[node name="Ghost" type="Sprite2D"]
+modulate = Color(0.13, 2.37, 0, 0.22)
+position = Vector2(0, -13.4989)
+texture = ExtResource("1_u078d")
+offset = Vector2(0, -15)
+script = ExtResource("2_d36vi")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(1, -12.5011)
+color = Color(0, 1, 0.133333, 1)
+range_z_min = 2
+range_z_max = 4
+texture = SubResource("GradientTexture2D_8v4yp")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PlayerMovementData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Player/PlayerMovementData.gd" id="1_5cael"]
+
+[resource]
+script = ExtResource("1_5cael")
+speed = 150.0
+acceleration = 1100
+friction = 600.0
+jump_velocity = -350.0
+gravity_scale = 2.0

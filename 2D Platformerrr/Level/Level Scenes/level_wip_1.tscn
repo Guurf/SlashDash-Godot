@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c14w51ct2r6op"]
+[gd_scene load_steps=5 format=3 uid="uid://bhm64cilpnrgc"]
 
 [ext_resource type="Texture2D" uid="uid://blwvvthtvhau2" path="res://Sprites/Tiles/lil lab tiles.png" id="1_x4umu"]
-[ext_resource type="PackedScene" uid="uid://cewav3n4gjj4" path="res://Level/Objects/wall_pad.tscn" id="2_wxijy"]
+[ext_resource type="PackedScene" uid="uid://cqkaut7q8hvia" path="res://Level/Object Scenes/wall_pad.tscn" id="2_wxijy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3iyl0"]
 texture = ExtResource("1_x4umu")

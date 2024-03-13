@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c227qi02cjxv6"]
+
+[ext_resource type="Script" path="res://UI/pause_scene.gd" id="1_gc1f7"]
+[ext_resource type="Texture2D" uid="uid://cl4l3klhfe4wi" path="res://Sprites/Player/lil cmnt blank.png" id="2_0psla"]
+
+[node name="Pause_Scene" type="Node2D"]
+script = ExtResource("1_gc1f7")
+
+[node name="Player" type="Sprite2D" parent="."]
+position = Vector2(0, 17)
+scale = Vector2(12, 12)
+texture = ExtResource("2_0psla")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+offset_left = -328.0
+offset_top = -184.0
+offset_right = 344.0
+offset_bottom = 192.0
+color = Color(0.121569, 0.141176, 0.231373, 1)

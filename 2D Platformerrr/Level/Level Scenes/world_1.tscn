@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3]
 
-[ext_resource type="PackedScene" uid="uid://c7why7j72cc4d" path="res://Scenes/player.tscn" id="1_uerdk"]
+[ext_resource type="PackedScene" uid="uid://d26r4gwr2ehdh" path="res://Player/player.tscn" id="1_uerdk"]
 [ext_resource type="Texture2D" uid="uid://blwvvthtvhau2" path="res://Sprites/Tiles/lil lab tiles.png" id="2_snlio"]
-[ext_resource type="PackedScene" path="res://Level/Objects/spikes.tscn" id="3_dbu6c"]
-[ext_resource type="PackedScene" path="res://Level/Objects/dash_ring.tscn" id="4_jkd11"]
+[ext_resource type="PackedScene" path="res://Level/Object Scenes/spikes.tscn" id="3_dbu6c"]
+[ext_resource type="PackedScene" path="res://Level/Object Scenes/dash_ring.tscn" id="4_jkd11"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3iyl0"]
 texture = ExtResource("2_snlio")
